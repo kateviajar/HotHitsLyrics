@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Popular Songs</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,7 +25,10 @@
                 @Html.DisplayNameFor(model => model.ReleasedYear)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SingersId)
+                @Html.DisplayNameFor(model => model.Lyrics)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistsId)
             </th>
             <th></th>
         </tr>
@@ -46,7 +49,10 @@
                 @Html.DisplayFor(modelItem => item.ReleasedYear)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SingersId)
+                @Html.DisplayFor(modelItem => item.Lyrics)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArtistsId)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

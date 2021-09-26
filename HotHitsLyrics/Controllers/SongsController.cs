@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HotHitsLyrics.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,14 @@ namespace HotHitsLyrics.Controllers
         // GET: SongsController
         public ActionResult Index()
         {
+            //Add namespace HotHitsLyrics.Models and a few rows of data
+            List<Songs> songs = new List<Songs>
+            {
+                new Songs{ SongsId=1, SongName="Happier Than Ever", Genre="Pop", Lyrics="When I'm away from you", ReleasedYear=2021, ArtistsId=1},
+                new Songs{SongsId=2, SongName="Afterglow", Genre="Pop", Lyrics="We were love-drunk, waiting on a miracle", ReleasedYear=2020, ArtistsId=2}
+            };
+            ViewData.Model = songs;
+
             return View();
         }
 

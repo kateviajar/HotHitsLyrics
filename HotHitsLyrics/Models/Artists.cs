@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace HotHitsLyrics.Models
 {
-    public class Singers
+    public class Artists
     {
-        //Create Primary Key and related fields of Singers
-        public int SingersId { get; set; }
+        //Create Primary Key and related fields of Artists
+        public int ArtistsId { get; set; }
         public string Name { get; set; }
         public string Language { get; set; }
         public string Country { get; set; }

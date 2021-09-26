@@ -12,6 +12,7 @@ namespace HotHitsLyrics.Models
         public string SongName { get; set; }
         public string Genre { get; set; }
         public int ReleasedYear { get; set; }
-        public int SingersId { get; set; }
+        public string Lyrics { get; set; }
+        public int ArtistsId { get; set; }
     }
 }

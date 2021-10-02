@@ -11,7 +11,12 @@ namespace HotHitsLyrics.Models
         //Primary Key
         public int ArtistId { get; set; }
 
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; }
+
         //Only represent Date
+        [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 

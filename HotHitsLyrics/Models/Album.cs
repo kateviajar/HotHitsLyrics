@@ -15,6 +15,7 @@ namespace HotHitsLyrics.Models
         [Required]
         public string Name { get; set; }
 
+        [Display(Name = "Released Year")]
         [Range(1900, 2050)]
         public int ReleasedYear { get; set; }
 

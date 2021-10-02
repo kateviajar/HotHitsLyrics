@@ -17,8 +17,7 @@ namespace HotHitsLyrics.Models
 
         public string Genre { get; set; }
 
-        [DataType(DataType.Time)]
-        public DateTime Length { get; set; }
+        public string Length { get; set; }
 
         public string Songwriter { get; set; }
 
@@ -26,6 +25,7 @@ namespace HotHitsLyrics.Models
         public string Lyrics { get; set; }
 
         //Foreign Key
+        [Display(Name = "Album")]
         public int AlbumId { get; set; }
 
         //parent ref

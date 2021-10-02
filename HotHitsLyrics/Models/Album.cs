@@ -22,6 +22,7 @@ namespace HotHitsLyrics.Models
         public string Photo { get; set; }
 
         //Foreign Key
+        [Display(Name = "Artist")]
         public int ArtistId { get; set; }
 
         //parent ref

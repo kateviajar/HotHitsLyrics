@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Popular Artists</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                <!-- set the heading as a hyperlink to trigger descending sorting-->
+                <!-- set the heading as a hyperlink to trigger the Index method for descending sorting-->
                 @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSortMethod})
                 @*@Html.DisplayNameFor(model => model.Name)*@
             </th>

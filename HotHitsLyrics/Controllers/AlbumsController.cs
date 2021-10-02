@@ -10,39 +10,23 @@ using HotHitsLyrics.Models;
 
 namespace HotHitsLyrics.Controllers
 {
-    public class ArtistsController : Controller
+    public class AlbumsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ArtistsController(ApplicationDbContext context)
+        public AlbumsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Artists
-        public async Task<IActionResult> Index(string sortOrder)
+        // GET: Albums
+        public async Task<IActionResult> Index()
         {
-            //Add Name-sorting function 
-            //Use ViewBag to store sorting method
-            ViewBag.NameSortMethod = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
-            var artists = from artist in _context.Artists select artist;
-
-            // Change Name order when users click the header hyperlink
-            switch (sortOrder)
-            {
-                case "desc":
-                    artists = artists.OrderByDescending(artist => artist.Name);
-                    break;
-                default:
-                    artists = artists.OrderBy(artist => artist.Name);
-                    break;
-            }
-
-            //return View(await _context.Artists.ToListAsync());
-            return View(await artists.ToListAsync());
+            var applicationDbContext = _context.Albums.Include(a => a.Artist);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Artists/Details/5
+        // GET: Albums/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,39 +34,42 @@ namespace HotHitsLyrics.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artists
-                .FirstOrDefaultAsync(m => m.ArtistId == id);
-            if (artist == null)
+            var album = await _context.Albums
+                .Include(a => a.Artist)
+                .FirstOrDefaultAsync(m => m.AlbumId == id);
+            if (album == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(album);
         }
 
-        // GET: Artists/Create
+        // GET: Albums/Create
         public IActionResult Create()
         {
+            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name");
             return View();
         }
 
-        // POST: Artists/Create
+        // POST: Albums/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArtistId,Name,DateOfBirth,Nationality")] Artist artist)
+        public async Task<IActionResult> Create([Bind("AlbumId,Name,ReleasedYear,Photo,ArtistId")] Album album)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(artist);
+                _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(artist);
+            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name", album.ArtistId);
+            return View(album);
         }
 
-        // GET: Artists/Edit/5
+        // GET: Albums/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,22 +77,23 @@ namespace HotHitsLyrics.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artists.FindAsync(id);
-            if (artist == null)
+            var album = await _context.Albums.FindAsync(id);
+            if (album == null)
             {
                 return NotFound();
             }
-            return View(artist);
+            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name", album.ArtistId);
+            return View(album);
         }
 
-        // POST: Artists/Edit/5
+        // POST: Albums/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArtistId,Name,DateOfBirth,Nationality")] Artist artist)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Name,ReleasedYear,Photo,ArtistId")] Album album)
         {
-            if (id != artist.ArtistId)
+            if (id != album.AlbumId)
             {
                 return NotFound();
             }
@@ -114,12 +102,12 @@ namespace HotHitsLyrics.Controllers
             {
                 try
                 {
-                    _context.Update(artist);
+                    _context.Update(album);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArtistExists(artist.ArtistId))
+                    if (!AlbumExists(album.AlbumId))
                     {
                         return NotFound();
                     }
@@ -130,10 +118,11 @@ namespace HotHitsLyrics.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(artist);
+            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name", album.ArtistId);
+            return View(album);
         }
 
-        // GET: Artists/Delete/5
+        // GET: Albums/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,30 +130,31 @@ namespace HotHitsLyrics.Controllers
                 return NotFound();
             }
 
-            var artist = await _context.Artists
-                .FirstOrDefaultAsync(m => m.ArtistId == id);
-            if (artist == null)
+            var album = await _context.Albums
+                .Include(a => a.Artist)
+                .FirstOrDefaultAsync(m => m.AlbumId == id);
+            if (album == null)
             {
                 return NotFound();
             }
 
-            return View(artist);
+            return View(album);
         }
 
-        // POST: Artists/Delete/5
+        // POST: Albums/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var artist = await _context.Artists.FindAsync(id);
-            _context.Artists.Remove(artist);
+            var album = await _context.Albums.FindAsync(id);
+            _context.Albums.Remove(album);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArtistExists(int id)
+        private bool AlbumExists(int id)
         {
-            return _context.Artists.Any(e => e.ArtistId == id);
+            return _context.Albums.Any(e => e.AlbumId == id);
         }
     }
 }

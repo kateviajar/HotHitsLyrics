@@ -18,5 +18,7 @@ namespace HotHitsLyrics.Models
         [MaxLength(100)]
         public string Nationality { get; set; }
 
+        //child ref
+        public List<Album> Albums { get; set; }
     }
 }

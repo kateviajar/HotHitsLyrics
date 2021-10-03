@@ -20,6 +20,7 @@ It consists of 4 webpages:
 
 ### Song Page
 - Users can conduct CRUD operations
+- Click on detail to view the lyrics
 
 ## Project Models
 It consists of 3 models:

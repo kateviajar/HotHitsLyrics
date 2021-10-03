@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HotHitsLyrics.Data;
 using HotHitsLyrics.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace HotHitsLyrics.Controllers
 {
     public class AlbumsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment; 
 
-        public AlbumsController(ApplicationDbContext context)
+        //Use IWebHostEnvironment to get the wwwroot path
+        public AlbumsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Albums
@@ -57,10 +62,30 @@ namespace HotHitsLyrics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlbumId,Name,ReleasedYear,Photo,ArtistId")] Album album)
+        //Bind PhotoFile instead of Photo
+        public async Task<IActionResult> Create([Bind("AlbumId,Name,ReleasedYear,PhotoFile,ArtistId")] Album album)
         {
             if (ModelState.IsValid)
             {
+                //Save upload photo file to the /wwwroot/Image
+                //get the wwwroot path
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                //store album name as fileName
+                string fileName = album.Name;
+                //get the extension of the file
+                string extension = Path.GetExtension(album.PhotoFile.FileName);
+                //Generate an unique file name and store in Photo column
+                album.Photo = fileName + DateTime.Now.ToString("yyMMddssfff") + extension;
+
+                //The path of photo file
+                string path = Path.Combine(wwwRootPath + "/Image", album.Photo);
+
+                //To save the photo file in /wwwroot/Image
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await album.PhotoFile.CopyToAsync(fileStream);
+                }
+
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -37,7 +37,9 @@
                 @Html.DisplayFor(modelItem => item.ReleasedYear)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Photo)
+                @*@Html.DisplayFor(modelItem => item.Photo)*@
+                <!-- display the photo-->
+                <img src="/Image/@Html.DisplayFor(modelItem => item.Photo)" class="img-thumbnail" alt="@Html.DisplayFor(modelItem => item.Name)" width="150"/>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Artist.Name)

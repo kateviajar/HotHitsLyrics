@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,5 +32,10 @@ namespace HotHitsLyrics.Models
 
         //child ref
         public List<Song> Songs { get; set; }
+
+        //For uploading the photo file
+        [NotMapped] //not generate a column in the database
+        [Display(Name ="Upload Photo")]
+        public IFormFile PhotoFile { get; set; }
     }
 }

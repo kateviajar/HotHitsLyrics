@@ -22,5 +22,13 @@ It consists of 4 webpages:
 - Users can conduct CRUD operations
 
 ## Project Models
+It consists of 3 models:
+- Artist
+- Album
+- Song
 ### Entity Relationship Diagram
-![HotHitsLyrics ERD](https://gyazo.com/748dc729d7baccee0e94ba1844981bbf)
+![HotHitsLyrics-ERD](https://user-images.githubusercontent.com/78240130/135736875-fee7a842-b8f7-46d6-b873-58fe1ae5a242.jpg)
+
+## Additional Features
+
+## References

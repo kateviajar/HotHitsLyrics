@@ -25,9 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Songwriter)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Lyrics)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Album)
             </th>
@@ -49,15 +49,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Songwriter)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Lyrics)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Album.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SongId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SongId">Details</a> |
+                <a asp-action="Details" asp-route-id="@item.SongId">Lyrics</a> |
                 <a asp-action="Delete" asp-route-id="@item.SongId">Delete</a>
             </td>
         </tr>

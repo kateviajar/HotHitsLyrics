@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit the song</h1>
 
-<h4>Song</h4>
+<h4>Song information and lyrics</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,7 +35,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Lyrics" class="control-label"></label>
-                <input asp-for="Lyrics" class="form-control" />
+                <!--Change input to textarea, use pre-line to break line at new line characters-->
+                <textarea asp-for="Lyrics" class="form-control" rows="20" style="white-space:pre-line"></textarea>
                 <span asp-validation-for="Lyrics" class="text-danger"></span>
             </div>
             <div class="form-group">

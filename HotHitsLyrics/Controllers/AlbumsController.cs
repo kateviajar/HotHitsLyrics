@@ -75,7 +75,7 @@ namespace HotHitsLyrics.Controllers
                 //get the extension of the file
                 string extension = Path.GetExtension(album.PhotoFile.FileName);
                 //Generate an unique file name and store in Photo column
-                album.Photo = fileName + DateTime.Now.ToString("yyMMddssfff") + extension;
+                album.Photo = fileName + album.ArtistId + extension;
 
                 //The path of photo file
                 string path = Path.Combine(wwwRootPath + "/Image", album.Photo);
@@ -116,7 +116,8 @@ namespace HotHitsLyrics.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Name,ReleasedYear,Photo,ArtistId")] Album album)
+        //Bind PhotoFile instead of Photo
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Name,ReleasedYear,Photo,PhotoFile,ArtistId")] Album album)
         {
             if (id != album.AlbumId)
             {
@@ -125,6 +126,26 @@ namespace HotHitsLyrics.Controllers
 
             if (ModelState.IsValid)
             {
+               
+                //Save upload photo file to the /wwwroot/Imag
+                //get the wwwroot path
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                //store album name as fileName
+                string fileName = album.Name;
+                //get the extension of the file
+                string extension = Path.GetExtension(album.PhotoFile.FileName);
+                //Generate an unique file name and store in Photo column
+                album.Photo = fileName + album.ArtistId + extension;
+
+                //The path of photo file
+                string path = Path.Combine(wwwRootPath + "/Image", album.Photo);
+
+                //To save the photo file in /wwwroot/Image, if the path is the same, overwrite the file
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await album.PhotoFile.CopyToAsync(fileStream);
+                }
+
                 try
                 {
                     _context.Update(album);
@@ -172,6 +193,17 @@ namespace HotHitsLyrics.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var album = await _context.Albums.FindAsync(id);
+
+            //delete file from wwwroot/Image folder
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", album.Photo);
+
+            //check whether the file exists
+            if(System.IO.File.Exists(imagePath))
+            {
+                //if yes, delete the file
+                System.IO.File.Delete(imagePath);
+            }
+
             _context.Albums.Remove(album);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

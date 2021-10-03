@@ -13,6 +13,7 @@ namespace HotHitsLyrics.Models
         //Primary Key
         public int AlbumId { get; set; }
 
+        [Display(Name = "Album Name")]
         [MaxLength(100)]
         [Required]
         public string Name { get; set; }

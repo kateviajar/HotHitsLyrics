@@ -4,13 +4,14 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit Album</h1>
 
-<h4>Album</h4>
+<h4>Album Record</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <!-- set enctype attribute since we will upload a file via form-->
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="AlbumId" />
             <div class="form-group">
@@ -25,8 +26,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" />
+                <img src="@("~/Image/" + Model.Photo)" asp-append-version="true" class="img-thumbnail" />
                 <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhotoFile" class="control-label"></label>
+                <input asp-for="PhotoFile" accept="image/*" />
+                <span asp-validation-for="PhotoFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ArtistId" class="control-label"></label>

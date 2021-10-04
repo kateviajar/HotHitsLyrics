@@ -5,6 +5,9 @@ It makes people to enjoy singing songs more, especially when they don’t know w
 
 Users can view the list of artists, albums and songs. In addition, they can create, edit or delete the data.
 
+### Published version of the project:
+https://hothitslyrics.azurewebsites.net/
+
 ## Website Structures
 It consists of 4 webpages:
 ### Home Page

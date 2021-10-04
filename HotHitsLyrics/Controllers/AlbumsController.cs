@@ -53,7 +53,8 @@ namespace HotHitsLyrics.Controllers
         // GET: Albums/Create
         public IActionResult Create()
         {
-            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name");
+            // Add OrderBy() to sort the Artists Name order in the dropdown list
+            ViewData["ArtistId"] = new SelectList(_context.Artists.OrderBy(a => a.Name), "ArtistId", "Name");
             return View();
         }
 
@@ -91,6 +92,7 @@ namespace HotHitsLyrics.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name", album.ArtistId);
+
             return View(album);
         }
 

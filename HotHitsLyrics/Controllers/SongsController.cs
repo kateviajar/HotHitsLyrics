@@ -48,7 +48,8 @@ namespace HotHitsLyrics.Controllers
         // GET: Songs/Create
         public IActionResult Create()
         {
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "AlbumId", "Name");
+            // Add OrderBy() to sort the Albums Name order in the dropdown list of Create View
+            ViewData["AlbumId"] = new SelectList(_context.Albums.OrderBy(a => a.Name), "AlbumId", "Name");
             return View();
         }
 

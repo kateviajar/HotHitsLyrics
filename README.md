@@ -33,3 +33,6 @@ It consists of 3 models:
 ## Additional Features
 
 ## References
+[Tutorial: Add sorting, filtering, and paging with the Entity Framework in an ASP.NET MVC application](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application#prerequisites)
+
+

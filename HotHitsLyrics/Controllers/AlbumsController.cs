@@ -109,7 +109,8 @@ namespace HotHitsLyrics.Controllers
             {
                 return NotFound();
             }
-            ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name", album.ArtistId);
+            //Add OrderBy() to sort the Artists Name order in the dropdown list
+            ViewData["ArtistId"] = new SelectList(_context.Artists.OrderBy(a => a.Name), "ArtistId", "Name", album.ArtistId);
             return View(album);
         }
 

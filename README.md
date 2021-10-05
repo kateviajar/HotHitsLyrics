@@ -36,8 +36,13 @@ It consists of 3 models:
 ![HotHitsLyrics-ERD](https://user-images.githubusercontent.com/78240130/135736875-fee7a842-b8f7-46d6-b873-58fe1ae5a242.jpg)
 
 ## Additional Features
-1. Users can upload, update or delete an album image file (*Albumns Views*)
-2. The Artists Name column can be sorted asending or descending by clicking the column heading hyperlink (*Artists Index View*)
+1. Users can upload, update or delete an album image file 
+   - ***Albumns Views***
+2. The Artists Name column can be sorted asending or descending by clicking the column heading hyperlink 
+   - ***Artists Index View***
+4. The dropdown lists of Artist Name and Albumn Name (foreign keys) are sorted alphabetically and searchable 
+    - ***Albumns Create View and Edit View***
+    - ***Songs Create View and Edit View***
 
 
 ## References
@@ -45,3 +50,6 @@ It consists of 3 models:
 
 - [ASP.NET Core MVC Image Upload and Retrieve](https://www.youtube.com/watch?v=QpJvqiHl1Fo)
 
+- [select2 jQuery-based replacement for select boxes](https://select2.org/)
+
+- [select2 cdnjs library](https://cdnjs.com/libraries/select2)

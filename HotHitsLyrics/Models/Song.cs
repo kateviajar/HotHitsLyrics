@@ -13,12 +13,14 @@ namespace HotHitsLyrics.Models
 
         [Required]
         [MaxLength(100)]
+        [Display(Name ="Song Name")]
         public string Name { get; set; }
 
         public string Genre { get; set; }
 
         public string Length { get; set; }
 
+        [Display(Name = "Songwriter(s)")]
         public string Songwriter { get; set; }
 
         [Required]

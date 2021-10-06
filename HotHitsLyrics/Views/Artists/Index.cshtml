@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HotHitsLyrics.Models.Artist>
 
 @{
-    ViewData["Title"] = "Artists - Hot Hits Lyrics";
+    ViewData["Title"] = "Popular Artists";
 }
 
 <h1>Popular Artists</h1>
@@ -9,41 +9,42 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<!-- add sortable and table-hover to the table class to give sorting function and hover effect-->
+<table class="table sortable table-hover">
     <thead>
         <tr>
+            <!-- change headings to hyperlink, so it is clickable -->
             <th>
-                <!-- set the heading as a hyperlink to trigger the Index method for descending sorting-->
-                @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSortMethod})
-                @*@Html.DisplayNameFor(model => model.Name)*@
+                <a href="#">Name</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                <a href="#">Date of Birth</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nationality)
+                <a href="#">Nationality</a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nationality)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ArtistId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ArtistId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ArtistId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nationality)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ArtistId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ArtistId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ArtistId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

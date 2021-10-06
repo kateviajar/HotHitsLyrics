@@ -1,28 +1,30 @@
 ﻿@model IEnumerable<HotHitsLyrics.Models.Album>
 
 @{
-    ViewData["Title"] = "Albums - Hot Hits Lyrics";
+    ViewData["Title"] = "Popular Albums";
 }
 
-<h1>Top Albums</h1>
+<h1>Popular Albums</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<!-- add sortable and table-hover to the table class to give sorting function and hover effect-->
+<table class="table sortable table-hover">
     <thead>
         <tr>
+            <!-- change headings to hyperlink, so it is clickable -->
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a href="#">Name</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReleasedYear)
+                <a href="#">Released Year</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Photo)
+                <a href="#">Artist</a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Artist)
+            <th class="sorttable_nosort">
+                @*@Html.DisplayNameFor(model => model.Photo)*@
             </th>
             <th></th>
         </tr>
@@ -37,12 +39,15 @@
                 @Html.DisplayFor(modelItem => item.ReleasedYear)
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.Photo)*@
-                <!-- display the photo-->
-                <img src="/Image/@Html.DisplayFor(modelItem => item.Photo)" class="img-thumbnail" alt="@Html.DisplayFor(modelItem => item.Name)" width="150"/>
+                @Html.DisplayFor(modelItem => item.Artist.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Artist.Name)
+                <!-- display the photos-->
+                @if (item.Photo != null)
+                {
+                    <img src="~/Image/@item.Photo" class="img-thumbnail" alt="@item.Name"  />
+                }
+
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AlbumId">Edit</a> |

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HotHitsLyrics.Models.Song>
 
 @{
-    ViewData["Title"] = "Songs - Hot Hits Lyrics";
+    ViewData["Title"] = "Popular Songs";
 }
 
 <h1>Hot Hits</h1>
@@ -10,26 +10,29 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<!-- add bootstrap table-hover and make it sortable-->
+<table class="table sortable table-hover">
     <thead>
         <tr>
+            <!--change heading to hyperlink, sot it is clickable-->
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a href="#">Name</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                <a href="#">Genre</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Length)
+                <a href="#">Length</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Songwriter)
+                <a href="#">Songwriter(s)</a>
             </th>
+            <!--remove the Lyrics column from Index view-->
             @*<th>
                 @Html.DisplayNameFor(model => model.Lyrics)
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Album)
+                <a href="#">Album</a>
             </th>
             <th></th>
         </tr>

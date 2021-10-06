@@ -27,7 +27,8 @@ namespace HotHitsLyrics.Controllers
         // GET: Albums
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Albums.Include(a => a.Artist);
+            //Add OrderBy to sort the Album list by Name
+            var applicationDbContext = _context.Albums.Include(a => a.Artist).OrderBy(a => a.Name);
             return View(await applicationDbContext.ToListAsync());
         }
 

@@ -20,26 +20,12 @@ namespace HotHitsLyrics.Controllers
         }
 
         // GET: Artists
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index()
         {
             //Add Name-sorting function 
-            //Use ViewBag to store sorting method
-            ViewBag.NameSortMethod = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
-            var artists = from artist in _context.Artists select artist;
+            //Add OrderBy to sort the Artists list by Name
+            return View(await _context.Artists.OrderBy(a => a.Name).ToListAsync());
 
-            // Change Name order when users click the header hyperlink
-            switch (sortOrder)
-            {
-                case "desc":
-                    artists = artists.OrderByDescending(artist => artist.Name);
-                    break;
-                default:
-                    artists = artists.OrderBy(artist => artist.Name);
-                    break;
-            }
-
-            //return View(await _context.Artists.ToListAsync());
-            return View(await artists.ToListAsync());
         }
 
         // GET: Artists/Details/5

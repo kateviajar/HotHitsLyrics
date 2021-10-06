@@ -15,9 +15,9 @@ namespace HotHitsLyrics.Controllers
     public class AlbumsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _hostEnvironment; 
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        //Use IWebHostEnvironment to get the wwwroot path
+        //Use IWebHostEnvironment to get the information about the web hosting environment
         public AlbumsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
@@ -54,7 +54,7 @@ namespace HotHitsLyrics.Controllers
         // GET: Albums/Create
         public IActionResult Create()
         {
-            // Add OrderBy() to sort the Artists Name order in the dropdown list
+            // Add OrderBy() to sort the Artists Name order in the dropdown list alphabetically
             ViewData["ArtistId"] = new SelectList(_context.Artists.OrderBy(a => a.Name), "ArtistId", "Name");
             return View();
         }
@@ -69,25 +69,30 @@ namespace HotHitsLyrics.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Save upload photo file to the /wwwroot/Image
-                //get the wwwroot path
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                //store album name as fileName
-                string fileName = album.Name;
-                //get the extension of the file
-                string extension = Path.GetExtension(album.PhotoFile.FileName);
-                //Generate an unique file name and store in Photo column
-                album.Photo = fileName + album.ArtistId + extension;
-
-                //The path of photo file
-                string path = Path.Combine(wwwRootPath + "/Image", album.Photo);
-
-                //To save the photo file in /wwwroot/Image
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                // check for photo upload and save file if any
+                if (album.PhotoFile != null)
                 {
-                    await album.PhotoFile.CopyToAsync(fileStream);
-                }
+                    //Save upload photo file to the /wwwroot/Image
+                    //get the wwwroot path
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
 
+                    //store album name as fileName
+                    string fileName = album.Name;
+                    //get the extension of the PhotoFile
+                    string extension = Path.GetExtension(album.PhotoFile.FileName);
+                    //Generate an unique file name with Guid, and store in Photo column
+                    album.Photo = fileName + "-" + Guid.NewGuid() + extension;
+
+                    //The destination path of photo file
+                    string path = Path.Combine(wwwRootPath + "/Image/Albums/", album.Photo);
+
+                    //Use FileStream to save the photo file in /wwwroot/Image/Albums
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await album.PhotoFile.CopyToAsync(fileStream);
+                    }
+                }
+                
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -129,29 +134,32 @@ namespace HotHitsLyrics.Controllers
             }
 
             if (ModelState.IsValid)
-            {
-               
-                //Save upload photo file to the /wwwroot/Imag
-                //get the wwwroot path
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                //store album name as fileName
-                string fileName = album.Name;
-                //get the extension of the file
-                string extension = Path.GetExtension(album.PhotoFile.FileName);
-                //Generate an unique file name and store in Photo column
-                album.Photo = fileName + album.ArtistId + extension;
-
-                //The path of photo file
-                string path = Path.Combine(wwwRootPath + "/Image", album.Photo);
-
-                //To save the photo file in /wwwroot/Image, if the path is the same, overwrite the file
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await album.PhotoFile.CopyToAsync(fileStream);
-                }
-
+            {                            
                 try
                 {
+                    // check for photo upload and save file if any
+                    if (album.PhotoFile != null)
+                    {
+                        //Save upload photo file to the /wwwroot/Image
+                        //get the wwwroot path
+                        string wwwRootPath = _hostEnvironment.WebRootPath;
+
+                        //store album name as fileName
+                        string fileName = album.Name;
+                        //get the extension of the PhotoFile
+                        string extension = Path.GetExtension(album.PhotoFile.FileName);
+                        //Generate an unique file name with Guid, and store in Photo column
+                        album.Photo = fileName + "-" + Guid.NewGuid() + extension;
+
+                        //The destination path of photo file
+                        string path = Path.Combine(wwwRootPath + "/Image/Albums/", album.Photo);
+
+                        //Use FileStream to save the photo file in /wwwroot/Image/Albums
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await album.PhotoFile.CopyToAsync(fileStream);
+                        }
+                    }
                     _context.Update(album);
                     await _context.SaveChangesAsync();
                 }
@@ -198,8 +206,8 @@ namespace HotHitsLyrics.Controllers
         {
             var album = await _context.Albums.FindAsync(id);
 
-            //delete file from wwwroot/Image folder
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Image", album.Photo);
+            //delete file from wwwroot/Image/Albums folder
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath + "/Image/Albums/", album.Photo);
 
             //check whether the file exists
             if(System.IO.File.Exists(imagePath))

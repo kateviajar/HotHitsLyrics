@@ -9,6 +9,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<!--Add a search box-->
+<form asp-controller="Albums" asp-action="Index" method="get">
+    <p>
+        <label>Album: </label>
+        <input type="text" name="albumName" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 <!-- add sortable and table-hover to the table class to give sorting function and hover effect-->
 <table class="table sortable table-hover">
     <thead>
@@ -30,31 +40,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleasedYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Artist.Name)
-            </td>
-            <td>
-                <!-- display the photos-->
-                @if (item.Photo != null)
-                {
-                    <img src="~/Image/Albums/@item.Photo" class="img-thumbnail" alt="@item.Name"  />
-                }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleasedYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist.Name)
+                </td>
+                <td>
+                    <!-- display the photos-->
+                    @if (item.Photo != null)
+                    {
+                        <img src="~/Image/Albums/@item.Photo" class="img-thumbnail" alt="@item.Name" />
+                    }
 
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AlbumId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AlbumId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AlbumId">Delete</a>
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AlbumId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AlbumId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AlbumId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -9,6 +9,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<!--Add a search box-->
+<form asp-controller="Artists" asp-action="Index" method="get">
+    <p>
+        <label>Artist: </label>
+        <input type="text" name="artistName" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
 <!-- add sortable and table-hover to the table class to give sorting function and hover effect-->
 <table class="table sortable table-hover">
     <thead>
@@ -48,3 +57,7 @@
         }
     </tbody>
 </table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

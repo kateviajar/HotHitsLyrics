@@ -20,11 +20,22 @@ namespace HotHitsLyrics.Controllers
         }
 
         // GET: Artists
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string artistName)
         {
+            // add Name searching
+            // Use LINQ query to select the artists
+            var artists = from a in _context.Artists select a;
+
+            // if there is a searchString, then get the data that meets the condition
+            if(!String.IsNullOrEmpty(artistName))
+            {
+                artists = artists.Where(a => a.Name.Contains(artistName));
+            }
+
             //Add Name-sorting function 
             //Add OrderBy to sort the Artists list by Name
-            return View(await _context.Artists.OrderBy(a => a.Name).ToListAsync());
+            //return View(await _context.Artists.OrderBy(a => a.Name).ToListAsync());
+            return View(await artists.OrderBy(a => a.Name).ToListAsync());
 
         }
 

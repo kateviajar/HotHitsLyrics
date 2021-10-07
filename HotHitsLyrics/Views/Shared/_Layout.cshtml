@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HotHitsLyrics</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/> <!--add asp-append-version to solve the css not loading issue-->
 
   
 </head>
@@ -16,7 +16,7 @@
             <div class="container">
                 <!--Add the Logo-->
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/Image/HotHitsLyrics.png" alt="Logo" class="logoImg" width="100"/>
+                    <img src="~/Image/HotHitsLyrics.png" alt="Logo" class="logoImg" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

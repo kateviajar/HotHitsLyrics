@@ -11,21 +11,24 @@ https://hothitslyrics.azurewebsites.net/
 ## Website Structures
 It consists of 4 webpages:
 ### Home Page
+- Include the references used in the project
 
 ### Artist Page
 - Users can conduct CRUD operations
-- In Index View, the Name column can be sorted ascending or descending
+- In **Index** View, the table headings are clickable for sorting and the searching box cna be used to filter Name
 
 ### Album Page
 - Users can conduct CRUD operations
 - Users can upload/ edit/ delete a photo file, the file will be stored/overwritten in the **/wwwroot/Image** folder
+- In **Index** View, the table headings are clickable for sorting and the searching box cna be used to filter Name
 - In the **Index** View, the photos will be displayed
-- In the **Create** View, the foreign key's dropdown list is sorted alphabetically
+- In the **Create** View, the foreign key's dropdown list is sorted alphabetically and searchable
 
 ### Song Page
 - Users can conduct CRUD operations
 - Click on detail to view the lyrics
-- In the **Create** View, the foreign key's dropdown list is sorted alphabetically
+- In **Index** View, the table headings are clickable for sorting and the searching box cna be used to filter Name
+- In the **Create** View, the foreign key's dropdown list is sorted alphabetically and searchable
 
 ## Project Models
 It consists of 3 models:
@@ -37,13 +40,18 @@ It consists of 3 models:
 
 ## Additional Features
 1. Users can upload, update or delete an album image file 
-   - ***Albumns Views***
-2. The Artists Name column can be sorted asending or descending by clicking the column heading hyperlink 
+   - ***All Albumns Views***
+2. The Artists, Albumns and Songs tables can be sorted asending or descending by clicking the column heading hyperlink 
    - ***Artists Index View***
+   - ***Albums Index View***
+   - ***Songs Index View***
 4. The dropdown lists of Artist Name and Albumn Name (foreign keys) are sorted alphabetically and searchable 
-    - ***Albumns Create View and Edit View***
-    - ***Songs Create View and Edit View***
-
+   - ***Albumns Create View and Edit View***
+   - ***Songs Create View and Edit View***
+5. Users can search the Artist Name, Albumn Name and Song Name for filtering from all the Index Views
+   - ***Artists Index View***
+   - ***Albumns Index View***
+   - ***Songs Index View***
 
 ## References
 - [Tutorial: Add sorting, filtering, and paging with the Entity Framework in an ASP.NET MVC application](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application#prerequisites)
@@ -53,3 +61,9 @@ It consists of 3 models:
 - [select2 jQuery-based replacement for select boxes](https://select2.org/)
 
 - [select2 cdnjs library](https://cdnjs.com/libraries/select2)
+
+- [table sorting](https://kryogenix.org/code/browser/sorttable/)
+
+- Logo made from [Logomakr](https://logomakr.com/)
+
+- Royalty-Free images from [Pixabay](https://pixabay.com/)

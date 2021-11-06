@@ -6,8 +6,12 @@
 
 <h1>Popular Artists</h1>
 
+<!-- hide the Create link from anonymous users -->
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create">Create New</a>
+    }
 </p>
 
 <!--Add a search box-->
@@ -50,9 +54,16 @@
                     @Html.DisplayFor(modelItem => item.Nationality)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ArtistId">Edit</a> |
+                    <!-- hide the Edit and Delete links from anonymous users -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ArtistId">Edit</a>
+                    } |
                     <a asp-action="Details" asp-route-id="@item.ArtistId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ArtistId">Delete</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.ArtistId">Delete</a>
+                    }
                 </td>
             </tr>
         }

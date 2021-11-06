@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HotHitsLyrics.Data;
 using HotHitsLyrics.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotHitsLyrics.Controllers
 {
+    //make the Songs page private
+    [Authorize]
     public class SongsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +23,7 @@ namespace HotHitsLyrics.Controllers
         }
 
         // GET: Songs
+        [AllowAnonymous] //the list of Songs can be public
         public async Task<IActionResult> Index(string songName)
         {
             // add Name searching
@@ -39,6 +43,7 @@ namespace HotHitsLyrics.Controllers
         }
 
         // GET: Songs/Details/5
+        [AllowAnonymous] //the Details of Songs can be public
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

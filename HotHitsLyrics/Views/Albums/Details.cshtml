@@ -32,11 +32,20 @@
             @Html.DisplayNameFor(model => model.Photo)
         </dt>
         <dd class="col-sm-10">
-            <img src="@("~/Image/Albums/" + Model.Photo)" asp-append-version="true" class="img-thumbnail" />
+            @if (Model.Photo != null)
+            {
+                <img src="~/Image/Albums/@Model.Photo" asp-append-version="true" class="img-thumbnail" alt="@Model.Name" />
+            }
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.AlbumId">Edit</a> |
+    <!-- hide the Edit link from anonymous users -->
+    @if (User.Identity.IsAuthenticated)
+    { 
+        <a asp-action="Edit" asp-route-id="@Model.AlbumId">Edit</a>
+    }
+</div>
+<div>
     <a asp-action="Index">Back to List</a>
 </div>

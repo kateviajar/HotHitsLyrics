@@ -6,8 +6,12 @@
 
 <h1>Popular Albums</h1>
 
+<!-- hide the Create link from anonymous users -->
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.Identity.IsAuthenticated)
+    { 
+        <a asp-action="Create">Create New</a>
+    }   
 </p>
 
 <!--Add a search box-->
@@ -56,14 +60,21 @@
                     <!-- display the photos-->
                     @if (item.Photo != null)
                     {
-                        <img src="~/Image/Albums/@item.Photo" class="img-thumbnail" alt="@item.Name"/>
+                        <img src="~/Image/Albums/@item.Photo" class="img-thumbnail" alt="@item.Name" />
                     }
 
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.AlbumId">Edit</a> |
+                    <!-- hide the Edit and Delete links from anonymous users -->
+                    @if (User.Identity.IsAuthenticated)
+                    { 
+                        <a asp-action="Edit" asp-route-id="@item.AlbumId">Edit</a>
+                    } | 
                     <a asp-action="Details" asp-route-id="@item.AlbumId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.AlbumId">Delete</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.AlbumId">Delete</a> 
+                    }   
                 </td>
             </tr>
         }

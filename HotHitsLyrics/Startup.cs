@@ -36,6 +36,18 @@ namespace HotHitsLyrics
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            // Enable Google Auth
+            services.AddAuthentication()
+                .AddGoogle(options => 
+                {
+                    //access Google Auth section of appsettings.json
+                    IConfigurationSection googleAuth = Configuration.GetSection("Authentication:Google");
+
+                    //read Google API key values
+                    options.ClientId = googleAuth["ClientId"];
+                    options.ClientSecret = googleAuth["ClientSecret"];
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

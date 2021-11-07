@@ -43,6 +43,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.SongId">Edit</a> |
+    <!-- hide the Edit link from anonymous users -->
+    @if(User.Identity.IsAuthenticated)
+     {
+        <a asp-action="Edit" asp-route-id="@Model.SongId">Edit</a>
+     }
+</div>
+<div>
     <a asp-action="Index">Back to List</a>
 </div>

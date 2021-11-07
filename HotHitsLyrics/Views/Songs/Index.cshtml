@@ -7,8 +7,12 @@
 <h1>Hot Hits</h1>
 <h4>Explore the Lyrics Now</h4>
 
+<!-- hide the Create link from anonymous users -->
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.Identity.IsAuthenticated)
+    { 
+        <a asp-action="Create">Create New</a>
+    }
 </p>
 
 <!--Add a search box-->
@@ -70,9 +74,16 @@
                     @Html.DisplayFor(modelItem => item.Album.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.SongId">Edit</a> |
+                    <!-- hide the Edit and Delete links from anonymous users -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.SongId">Edit</a>
+                    } |
                     <a asp-action="Details" asp-route-id="@item.SongId">Lyrics</a> |
-                    <a asp-action="Delete" asp-route-id="@item.SongId">Delete</a>
+                    @if (User.Identity.IsAuthenticated)
+                    { 
+                        <a asp-action="Delete" asp-route-id="@item.SongId">Delete</a> 
+                    }   
                 </td>
             </tr>
         }

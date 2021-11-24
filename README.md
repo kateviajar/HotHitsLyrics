@@ -3,13 +3,21 @@
 The lyrics website includes the lyrics of popular songs. 
 It makes people to enjoy singing songs more, especially when they don’t know what the exact lyrics is.  
 
-Users can view the list of artists, albums and songs. In addition, they can create, edit or delete the data.
+Any users can view the list of artists, albums and songs.   
+Only **authenticated** users can create, edit or delete the data.
 
-### Published version of the project:
+## Published version of the project:
+### Azure
 https://hothitslyrics.azurewebsites.net/
 
+### Smarter Asp.Net
+This free trail doesn't support SSL.  
+http://paohua-001-site1.etempurl.com/
+
 ## Website Structures
-It consists of 4 webpages:
+It consists of 4 webpages as below.   
+Anonymous users can ONLY view the list of Artists, Albumns, and Songs, and their details.  
+
 ### Home Page
 - Include the references used in the project
 
@@ -52,6 +60,8 @@ It consists of 3 models:
    - ***Artists Index View***
    - ***Albumns Index View***
    - ***Songs Index View***
+6. Only **authenticated** users can access **Create**, **Edit**, and **Delete** functions.
+7. **Google Authentication** has been added to both local and Azure signin.
 
 ## References
 - [Tutorial: Add sorting, filtering, and paging with the Entity Framework in an ASP.NET MVC application](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application#prerequisites)
@@ -66,4 +76,6 @@ It consists of 3 models:
 
 - Logo made from [Logomakr](https://logomakr.com/)
 
-- Royalty-Free images from [Pixabay](https://pixabay.com/)
+- Royalty-Free images from [Pixabay](https://pixabay.com/)  
+
+- [Google external login setup](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-5.0) in ASP.NET Core

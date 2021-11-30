@@ -2,6 +2,7 @@ using HotHitsLyrics.Controllers;
 using HotHitsLyrics.Data;
 using HotHitsLyrics.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -36,6 +37,7 @@ namespace HotHitsLyricsTests
                 ArtistId = 777,
                 Name = "The Best Artist"
             };
+
             _context.Artists.Add(artist); // add the artist to Artists db set
 
             albums.Add(new Album
@@ -76,12 +78,109 @@ namespace HotHitsLyricsTests
             controller = new AlbumsController(_context, _hostEnvironment);
         }
 
-
+        #region CreatePOST
 
         [TestMethod]
-        public void TestMethod1()
+        public void CreateInvalidModelLoadsCreateView()
         {
-            
+            //arrang
+            Album album = new Album
+            {
+                AlbumId = 123,
+                Name = "Test",
+                ReleasedYear = 2022,
+                ArtistId = 666
+            };
+
+            controller.ModelState.AddModelError("Name", "Error");
+
+            //act
+            var result = (ViewResult)controller.Create(album).Result;
+
+            //assert
+            Assert.AreEqual("Create", result.ViewName);
         }
+
+        [TestMethod]
+        public void CreateInvalidModelLoadsAlbum()
+        {
+            //arrang
+            Album album = new Album
+            {
+                AlbumId = 123,
+                Name = "Test",
+                ReleasedYear = 2022,
+                ArtistId = 666
+            };
+
+            controller.ModelState.AddModelError("Name", "Error");
+
+            //act
+            var result = (ViewResult)controller.Create(album).Result;
+
+            //assert
+            Assert.AreEqual(album, result.Model);
+        }
+
+        [TestMethod]
+        public void CreateInvalidModelViewDataNotNull()
+        {
+            //arrang
+            Album album = new Album
+            {
+                AlbumId = 123,
+                Name = "Test",
+                ReleasedYear = 2022,
+                ArtistId = 666
+            };
+
+            controller.ModelState.AddModelError("Name", "Error");
+
+            //act
+            var result = (ViewResult)controller.Create(album).Result;
+
+            //assert
+            Assert.IsNotNull(result.ViewData["ArtistId"]);
+        }
+
+        [TestMethod]
+        public void CreateValidModelRedirectIndex()
+        {
+            //arrang
+            Album album = new Album
+            {
+                AlbumId = 123,
+                Name = "Test",
+                ReleasedYear = 2022,
+                ArtistId = 666
+            };
+
+            //act
+            var result = (RedirectToActionResult)controller.Create(album).Result;
+
+            //assert
+            Assert.AreEqual("Index", result.ActionName);
+        }
+
+        [TestMethod]
+        public void CreateValidModelInsertAlbum()
+        {
+            //arrang
+            Album album = new Album
+            {
+                AlbumId = 123,
+                Name = "Test",
+                ReleasedYear = 2022,
+                ArtistId = 666
+            };
+
+            //act
+            var result = (RedirectToActionResult)controller.Create(album).Result;
+
+            //assert
+            Assert.AreEqual(album, _context.Albums.Find(album.AlbumId));
+        }
+
+        #endregion
     }
 }

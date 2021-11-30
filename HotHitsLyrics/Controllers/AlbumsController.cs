@@ -115,7 +115,7 @@ namespace HotHitsLyrics.Controllers
             }
             ViewData["ArtistId"] = new SelectList(_context.Artists, "ArtistId", "Name", album.ArtistId);
 
-            return View(album);
+            return View("Create", album);
         }
 
         // GET: Albums/Edit/5

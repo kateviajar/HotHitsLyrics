@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotHitsLyricsTests
 {
@@ -179,6 +180,46 @@ namespace HotHitsLyricsTests
 
             //assert
             Assert.AreEqual(album, _context.Albums.Find(album.AlbumId));
+        }
+
+        #endregion
+
+        #region Index
+
+        [TestMethod]
+        public void IndexLoadsIndexView()
+        {
+            //arrange - in-memory db
+            //act
+            var result = (ViewResult)controller.Index(null).Result;
+
+            //assert
+            Assert.AreEqual("Index", result.ViewName);
+        }
+
+        [TestMethod]
+        public void IndexLoadsAlbums()
+        {
+            //arrange - in-memory db
+            //act
+            var result = (ViewResult)controller.Index(null).Result;
+            List<Album> model = (List<Album>)result.Model;
+
+            //assert - a list of albumns is expected to sort by name
+            CollectionAssert.AreEqual(albums.OrderBy(a => a.Name).ToList(), model);
+        }
+
+        [TestMethod]
+        public void IndexLoadsSearchedAlbums()
+        {
+            //arrange - in-memory db
+            String albumName = "Rock";
+            //act
+            var result = (ViewResult)controller.Index(albumName).Result;
+            List<Album> model = (List<Album>)result.Model;
+
+            //assert - a list of albumns is expected to sort by name
+            CollectionAssert.AreEqual(albums.Where(a => a.Name.Contains(albumName)).OrderBy(a => a.Name).ToList(), model);
         }
 
         #endregion

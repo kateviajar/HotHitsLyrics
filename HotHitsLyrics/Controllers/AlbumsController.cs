@@ -44,7 +44,7 @@ namespace HotHitsLyrics.Controllers
             //Add OrderBy to sort the Album list by Name
             //var applicationDbContext = _context.Albums.Include(a => a.Artist).OrderBy(a => a.Name);
             var applicationDbContext = albums.Include(a => a.Artist).OrderBy(a => a.Name);
-            return View(await applicationDbContext.ToListAsync());
+            return View("Index", await applicationDbContext.ToListAsync());
         }
 
         // GET: Albums/Details/5

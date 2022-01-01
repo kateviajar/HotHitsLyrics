@@ -62,6 +62,7 @@ It consists of 3 models:
    - ***Songs Index View***
 6. Only **authenticated** users can access **Create**, **Edit**, and **Delete** functions.
 7. **Google Authentication** has been added to both local and Azure signin.
+8. **Unit Tests** are added for testing the **POST Create** method of the Albumn controller.
 
 ## References
 - [Tutorial: Add sorting, filtering, and paging with the Entity Framework in an ASP.NET MVC application](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application#prerequisites)

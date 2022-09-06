@@ -25,14 +25,14 @@ namespace HotHitsLyrics.Controllers.api
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Song>>> GetSongs()
         {
-            return await _context.Songs.ToListAsync();
+            return await _context.Songs.Include(s => s.Album).OrderBy(s => s.Name).ToListAsync();
         }
 
         // GET: api/Songs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Song>> GetSong(int id)
         {
-            var song = await _context.Songs.FindAsync(id);
+            var song = await _context.Songs.Include(s => s.Album).FirstOrDefaultAsync(m => m.SongId == id);
 
             if (song == null)
             {

@@ -52,6 +52,14 @@ namespace HotHitsLyrics
             // swagger for api docs
             services.AddSwaggerGen();
 
+            // Fix Error: Access-Control-Allow-Origin
+            services.AddCors(options => {
+                options.AddPolicy(name: "CORS", policy => {
+                    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+            
+
             // Fix JSON Exception: ignore circular reference
             services.AddControllers().AddJsonOptions(options => 
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
@@ -72,6 +80,10 @@ namespace HotHitsLyrics
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Fix Error: Access-Control-Allow-Origin
+            app.UseCors("CORS");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
